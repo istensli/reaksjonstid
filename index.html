@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #app{
+            border: 1px solid black;
+            width: 350px;
+            height: 350px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+
+        }
+        div.lamp{
+            background-color: aquamarine;
+            margin: 5px;
+            border: 1px solid black;
+            width: 50px;
+            height: 50px;;
+            border-radius: 50%;
+        }
+        div.lightOn{
+            background-color: yellow;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+
+        //Model
+        let selectedLampIndex;
+
+        var startTime;
+        var finishTime;
+        var spentMilliseconds;
+        var spentSeconds;
+
+
+        alterSelectedLampIndex();
+        
+
+
+        //controller
+        function alterSelectedLampIndex(){
+            selectedLampIndex = getRandomNumber(1, 25);
+
+            updateView();
+            startTime = new Date().getTime();
+
+        }
+
+        function getRandomNumber(min, max){
+            return min + Math.floor(Math.random() * (max - min + 1));
+        }
+
+        function stopTime(){
+            finishTime = new Date().getTime();
+            spentMilliseconds = Math.floor(finishTime - startTime);
+            spentSeconds = spentMilliseconds / 1000;
+            console.log("Spent seconds: " + spentSeconds);
+        }
+
+
+
+
+        //view
+        function updateView(){
+            const appDiv = document.getElementById('app');
+            let html = makeCircles(25);
+            appDiv.innerHTML = html;
+
+            
+           
+
+        }
+
+        function makeCircles(numberOfCircles){
+            let html = '';
+            for(let i = 0; i < numberOfCircles; i++){
+                if(selectedLampIndex == (i + 1)){
+                    html += /*HTML*/`<div class="lamp lightOn" onclick="stopTime(); alterSelectedLampIndex()"></div>`;
+                }
+                else{
+                    html += /*HTML*/`<div class="lamp"></div>`;
+
+                }
+
+            }  
+            return html;  
+
+
+        }
+
+
+
+    </script>
+    
+</body>
+</html>
